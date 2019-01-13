@@ -100,6 +100,8 @@ namespace CastleGrimtol.Project
       System.Console.WriteLine("Type 'speak' to speak to the person in the current room");
 
       System.Console.WriteLine("////////////// BACK TO GAME ////////////////");
+      System.Console.WriteLine("Hit ENTER to continue the game.");
+      GetUserInput();
     }
 
     public void Inventory()
@@ -163,14 +165,15 @@ namespace CastleGrimtol.Project
       southRoom.Exits.Add("north", waitingRoom);
       westRoom.Exits.Add("east", waitingRoom);
 
+      System.Console.WriteLine("type 'help' for directions. Hit enter to continue!");
+      GetUserInput();
+
       StartGame();
     }
 
     public void StartGame()
     {
       System.Console.Clear();
-      System.Console.WriteLine("type 'help' for directions. Hit enter to continue!");
-      GetUserInput();
       System.Console.WriteLine($"Would you like to dance with me {CurrentPlayer.PlayerName}?");
       string danceresponse = System.Console.ReadLine().ToLower();
       if (danceresponse == "no")
@@ -191,6 +194,10 @@ namespace CastleGrimtol.Project
         {
           GetUserInput();
         }
+      }
+      else
+      {
+        StartGame();
       }
     }
 
