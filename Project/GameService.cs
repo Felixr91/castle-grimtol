@@ -121,7 +121,7 @@ namespace CastleGrimtol.Project
 
     public void Quit()
     {
-      System.Console.WriteLine("RIP");
+      // System.Console.WriteLine("RIP");
       // System.Console.WriteLine("You have died. Would you like to try again?");
       playing = false;
     }
@@ -245,7 +245,7 @@ namespace CastleGrimtol.Project
         Look();
         GetUserInput();
       }
-      if (itemName == "hammer" && (CurrentPlayer.Inventory[0].Name.ToString() == "hammer") && CurrentRoom.Name.ToString() == "The Sad Clown")
+      if (itemName == "hammer" && CurrentRoom.Name.ToString() == "The Sad Clown")
       {
         System.Console.WriteLine("Nice hit!!!!");
         System.Console.WriteLine("The small clown laughs.  He pulls a string. A rope comes down.");
@@ -254,8 +254,6 @@ namespace CastleGrimtol.Project
       }
       if (itemName == "rope" && CurrentRoom.Name.ToString() == "The Sad Clown")
       {
-        System.Console.WriteLine("Nice hit!!!!");
-        System.Console.WriteLine("The small clown laughs.  He pulls a string. A rope comes down.");
         CurrentPlayer.Inventory.Remove(usedItem);
         System.Console.WriteLine("You've escaped the fun house! YOU WIN!");
         System.Console.WriteLine("type 'quit' to EXIT");
