@@ -44,9 +44,25 @@ namespace CastleGrimtol.Project
         case "use":
           UseItem(option);
           break;
-        default:
-          System.Console.WriteLine("What are you even talking about!?!?! HA HAHA HA HA!");
+        case "speak":
+          Speak();
           break;
+        default:
+          System.Console.WriteLine("????? A HAHA HA HA! You're so funny!");
+          break;
+      }
+    }
+
+    public void Speak()
+    {
+      if (CurrentRoom.Name.ToString() == "The Clown with 3 wheels")
+      {
+        System.Console.WriteLine("The clown stops riding his bicycle. He farts. A green gas fills the room and kills you.");
+        Quit();
+      }
+      else
+      {
+        System.Console.Write("Nothing to say!");
       }
     }
 
@@ -57,10 +73,6 @@ namespace CastleGrimtol.Project
       {
         System.Console.WriteLine("You need a key to go in there!");
       }
-      // else if (CurrentPlayer.Inventory[0].ToString() == "key" && direction == "north" && CurrentRoom.Name.ToString() == "Waiting Room")
-      // {
-      //   CurrentRoom = CurrentRoom.Exits[direction];
-      // }
       else if (CurrentRoom.Exits.ContainsKey(direction))
       {
         CurrentRoom = CurrentRoom.Exits[direction];
@@ -70,12 +82,24 @@ namespace CastleGrimtol.Project
         System.Console.WriteLine("You can't go that way, silly silly silly boy!!!!!!! Ha HA HA!");
       }
       System.Console.WriteLine(CurrentRoom.Name.ToString());
-      Look();
     }
 
     public void Help()
     {
-      throw new System.NotImplementedException();
+      System.Console.WriteLine("Escape 'Fun House' to win!");
+      System.Console.WriteLine("When the game begins you find yourself in a waiting room. With a hysterical clown by your side.");
+
+      System.Console.WriteLine("**** COMMANDS LIST ****");
+      System.Console.WriteLine("To do something in 'Fun House' you must type a command followed by a space and an option");
+      System.Console.WriteLine("For example: 'go west', 'take sandwich', or 'use hammer");
+
+      System.Console.WriteLine("**** NAVIGATION ****");
+      System.Console.WriteLine("Type 'look' to look around the room you're in");
+
+      System.Console.WriteLine("**** SPEAKING ****");
+      System.Console.WriteLine("Type 'speak' to speak to the person in the current room");
+
+      System.Console.WriteLine("////////////// BACK TO GAME ////////////////");
     }
 
     public void Inventory()
@@ -102,17 +126,21 @@ namespace CastleGrimtol.Project
 
     public void Reset()
     {
-      throw new System.NotImplementedException();
+      Setup();
     }
 
     public void Setup()
     {
       //create rooms
-      Room waitingRoom = new Room("Waiting Room", "HA HA HAHA HA HA! What do you want to do? On the north side of us you see a locked door... here that? There's a sad little clown crying back there. The eastern side there's another door... hoo hoo! I here a little bell ringing! To the south there's another door... Its awfully quiet back there. HEE HEE! To the west I can hear water... sounds like someone's taking a shower! Where do you want to go?");
-      Room northRoom = new Room("The Sad Clown", "Inside you see a small clown sitting in a chair. To the right is a very large hammer with a star on its face and a very large hammer arcade machine. Do you speak to the clown or do you grab the hammer?");
-      Room eastRoom = new Room("The Clown with 3 wheels", "Inside theres an elderly clown riding a tricycle. His glare stays on the floor in front of him. Every time he completes a circle he rings the bell. Do you speak to the clown or do you exit the room?");
-      Room southRoom = new Room("The Dark Room", "You step inside. The door slams from behind you and you are left alone. From the darkness you hear a voice ask 'Do you really love him?' What do you respond?");
-      Room westRoom = new Room("The Shower Room", "Inside you see a shower is running. The person inside the shower pulls the curtain... a tall clown stands in the shower. The paint on his face has melted onto his body. He stares at you. He's wearing swimming trunks with a banana on them. He's also eating a banana. He drops the banana into the tub. What do you want to do?");
+      Room waitingRoom = new Room("Waiting Room", "HA HA HAHA HA HA! What will you do? On the north side of us you see a locked door... hear that? There's a sad little clown crying back there. On the eastern side there's another door... hoo hoo! I here a little bell ringing! To the south there's another door... Its awfully quiet back there. HEE HEE! To the west I can hear water... sounds like someone's taking a shower!");
+      Room northRoom = new Room("The Sad Clown", "Inside you see a small clown sitting in a chair. To the right is a very large hammer with a star on its face and a very large hammer arcade machine. ");
+      // Do you speak to the clown or do you grab the hammer?
+      Room eastRoom = new Room("The Clown with 3 wheels", "Inside theres an elderly clown riding a tricycle. His glare stays on the floor in front of him. Every time he completes a circle he rings the bell. ");
+      // Do you speak to the clown or do you exit the room?
+      Room southRoom = new Room("The Dark Room", "You step inside. The door slams from behind you and you are left alone. From the darkness you hear a voice ask 'Do you want to dance with me?'");
+      // What do you respond?
+      Room westRoom = new Room("The Shower Room", "Inside you see a shower is running. The person inside the shower pulls the curtain... a tall clown stands in the shower. The paint on his face has melted onto his body. He stares at you. He's wearing swimming trunks with a banana on them. He's also eating a banana. He drops the banana into the tub. ");
+      // What do you want to do?
 
       //create items
       Item banana = new Item("banana", "A token of your guides love. A wonderfully ripe and sweet BANANA!");
@@ -141,19 +169,23 @@ namespace CastleGrimtol.Project
     public void StartGame()
     {
       System.Console.Clear();
+      System.Console.WriteLine("type 'help' for directions. Hit enter to continue!");
+      GetUserInput();
       System.Console.WriteLine($"Would you like to dance with me {CurrentPlayer.PlayerName}?");
-      string danceresponse = System.Console.ReadLine();
+      string danceresponse = System.Console.ReadLine().ToLower();
       if (danceresponse == "no")
       {
         System.Console.WriteLine("I hate you! DIE!!!!!!!!!");
-        Quit();
+        System.Console.WriteLine("You're dead. Hit ENTER to RESTART!");
+        System.Console.ReadLine();
+        Reset();
       }
       else if (danceresponse == "yes")
       {
         System.Console.WriteLine("HAHAHAAAAAA HA HE he he! hey! I can't dance right now, but here you go!");
         System.Console.WriteLine("** You are offered a banana **");
         GetUserInput();
-        Look();
+        // Look();
         // while loop
         while (playing == true)
         {
@@ -204,6 +236,22 @@ namespace CastleGrimtol.Project
         System.Console.WriteLine("You unlock the door!");
         CurrentRoom = CurrentRoom.Exits["north"];
         Look();
+        GetUserInput();
+      }
+      if (itemName == "hammer" && (CurrentPlayer.Inventory[0].Name.ToString() == "hammer") && CurrentRoom.Name.ToString() == "The Sad Clown")
+      {
+        System.Console.WriteLine("Nice hit!!!!");
+        System.Console.WriteLine("The small clown laughs.  He pulls a string. A rope comes down.");
+        CurrentPlayer.Inventory.Remove(usedItem);
+        GetUserInput();
+      }
+      if (itemName == "rope" && CurrentRoom.Name.ToString() == "The Sad Clown")
+      {
+        System.Console.WriteLine("Nice hit!!!!");
+        System.Console.WriteLine("The small clown laughs.  He pulls a string. A rope comes down.");
+        CurrentPlayer.Inventory.Remove(usedItem);
+        System.Console.WriteLine("You've escaped the fun house! YOU WIN!");
+        System.Console.WriteLine("type 'quit' to EXIT");
         GetUserInput();
       }
     }
